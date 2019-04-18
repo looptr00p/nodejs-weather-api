@@ -8,7 +8,7 @@ module.exports = {
 
         axios.get(`https://api.darksky.net/forecast/${process.env.SECRETKEY}/${lat},${long}`)
             .then((response) => {
-                let weather = JSON.parse(JSON.stringify(response.data));
+                let weather = JSON.parse(JSON.stringify(response.data.currently));
                 return res
                     .status(HttpStatus.OK)
                     .json(weather)
