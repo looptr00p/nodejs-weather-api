@@ -1,8 +1,8 @@
 FROM node:8-alpine
-WORKDIR /app
+WORKDIR /srv
 COPY package*.json ./
 RUN npm install
 RUN npm ci --only=production
 COPY . .
-EXPOSE 8080
-CMD [ "npm", "start" ]
+EXPOSE 3000
+CMD [ "node", "app.js" ]
