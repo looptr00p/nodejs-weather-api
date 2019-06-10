@@ -8,6 +8,11 @@ process.env.PORT = process.env.PORT || 3000;
  */
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
+/**
+ * REDIS
+ */
+process.env.REDIS = process.env.REDIS || 'localhost';
+
 
 /**
  * SECRETKEY DARK SKY API

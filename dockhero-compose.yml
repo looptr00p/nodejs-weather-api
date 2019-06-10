@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  # The reverse proxy service (Traefik)
+  reverse-proxy:
+    image: traefik:alpine  # The official Traefik docker image
+    command: --api --docker  # Enables the web UI and tells Traefik to listen to docker
+    ports:
+      - "80:80"      # The HTTP port
+      - "8080:8080"  # The Web UI (enabled by --api)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # So that Traefik can listen to the Docker events
+
+  weathapp:
+    image: looptroop/weather-app:latest
+    labels:
+      - "traefik.frontend.rule=Host:dockhero-corrugated-63343.dockhero.io"
+      
+  weathapi:
+    image: looptroop/weather-api:latest
+    labels:
+      - "traefik.frontend.rule=Host:dockhero-corrugated-63343.dockhero.io;PathPrefix:/api"
+    links:
+     - redis:redis
+    environment:
+     - REDIS=redis
+     - NODE_ENV=prod
+     - SECRETKEY=f847fa782b013a533853221db2d164a5
+  redis:
+    image: "redis:alpine"

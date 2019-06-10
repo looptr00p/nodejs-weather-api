@@ -1,0 +1,23 @@
+version: '3'
+services:
+  weathapi:
+    image: looptroop/weather-api
+    ports:
+     - "3000:3000"
+    links:
+     - redis:redis
+    environment:
+     - REDIS=redis
+     - NODE_ENV=prod
+     - SECRETKEY=f847fa782b013a533853221db2d164a5
+  redis:
+    image: "redis:alpine"
+  weatherapp:
+    image: looptroop/weather-app
+    ports:
+     - "8000:80"
+    links:
+    - weathapi:weathapi
+    environment:
+     - MAPS_KEY=AIzaSyD7o_wRo4twaMQw9Nx-oSTf9xG5ePzaAn0
+     - API_KEY_GEOCODE=AIzaSyCmbxB3sQXd7jFIAfrMEUq_TYKUyL1NYWg
